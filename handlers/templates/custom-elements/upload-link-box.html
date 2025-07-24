@@ -3,8 +3,12 @@
     @import "/third-party/bulma@0.9.3/bulma.min.css";
     @import "/third-party/fontawesome6/css/all.min.css";
 
+    :host {
+      --light-font-color: var(--text-muted, #696969);
+    }
+
     .light-font {
-      color: #696969;
+      color: var(--light-font-color);
     }
 
     .box button {

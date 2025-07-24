@@ -2,6 +2,36 @@
 
 body {
   font-family: "Karla", sans-serif;
+  background: var(--bg, #fff);
+  color: var(--fg, #222);
+  min-height: 100vh;
+}
+
+html, body, #app, .container, .content {
+  background: var(--bg, #fff) !important;
+  color: var(--fg, #222) !important;
+}
+
+/* Forzar fondo oscuro en todos los contenedores principales */
+body.dark-mode html,
+body.dark-mode body,
+body.dark-mode #app,
+body.dark-mode .container,
+body.dark-mode .content,
+body.dark-mode main {
+  background: var(--bg) !important;
+  color: var(--fg) !important;
+}
+
+/* Asegurar que toda la página tenga fondo oscuro */
+body.dark-mode {
+  background: var(--bg) !important;
+  color: var(--fg) !important;
+  min-height: 100vh;
+}
+
+body.dark-mode * {
+  border-color: var(--border-light, #4a5568);
 }
 
 a {
@@ -13,6 +43,680 @@ ul,
 article,
 form {
   max-width: 70ch;
+}
+
+/* Variables modo claro */
+:root {
+  --bg: #ffffff;
+  --fg: #2d3748;
+  --bg-secondary: #f7fafc;
+  --fg-secondary: #4a5568;
+  --primary: #3182ce;
+  --primary-dark: #2c5282;
+  --button-bg: var(--primary);
+  --button-fg: #ffffff;
+  --button-hover: #2c5282;
+  --button-secondary: #e2e8f0;
+  --button-secondary-fg: #2d3748;
+  --button-secondary-hover: #cbd5e0;
+  --dropdown-bg: #ffffff;
+  --dropdown-fg: #2d3748;
+  --dropdown-border: #e2e8f0;
+  --dropdown-hover: #f7fafc;
+  --card-bg: #ffffff;
+  --card-shadow: rgba(0, 0, 0, 0.1);
+  --border-light: #e2e8f0;
+  --border-medium: #cbd5e0;
+  --link-color: #3182ce;
+  --link-hover: #2c5282;
+  --success: #38a169;
+  --success-light: #f0fff4;
+  --warning: #d69e2e;
+  --warning-light: #fffbeb;
+  --danger: #e53e3e;
+  --danger-light: #fed7d7;
+  --info: #3182ce;
+  --info-light: #ebf8ff;
+  --text-muted: #718096;
+}
+
+body.dark-mode {
+  --bg: #0f0f23;
+  --fg: #f7fafc;
+  --bg-secondary: #1a1b3a;
+  --fg-secondary: #e2e8f0;
+  --primary: #63b3ed;
+  --primary-dark: #3182ce;
+  --button-bg: #4a5568;
+  --button-fg: #f7fafc;
+  --button-hover: #63b3ed;
+  --button-secondary: #2d3748;
+  --button-secondary-fg: #e2e8f0;
+  --button-secondary-hover: #4a5568;
+  --dropdown-bg: #2d3748;
+  --dropdown-fg: #f7fafc;
+  --dropdown-border: #4a5568;
+  --dropdown-hover: #4a5568;
+  --card-bg: #1a202c;
+  --card-shadow: rgba(0, 0, 0, 0.4);
+  --border-light: #4a5568;
+  --border-medium: #718096;
+  --link-color: #63b3ed;
+  --link-hover: #90cdf4;
+  --success: #68d391;
+  --success-light: rgba(104, 211, 145, 0.1);
+  --warning: #f6e05e;
+  --warning-light: rgba(246, 224, 94, 0.1);
+  --danger: #fc8181;
+  --danger-light: rgba(252, 129, 129, 0.1);
+  --info: #63b3ed;
+  --info-light: rgba(99, 179, 237, 0.1);
+  --text-muted: #e2e8f0;
+}
+
+/* Botones */
+.button, button, input[type="submit"], input[type="button"] {
+  background: var(--button-bg);
+  color: var(--button-fg);
+  border: 1px solid var(--button-bg);
+  border-radius: 6px;
+  padding: 0.6em 1.5em;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.button:hover, button:hover, input[type="submit"]:hover, input[type="button"]:hover {
+  background: var(--button-hover);
+  border-color: var(--button-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.button:active, button:active, input[type="submit"]:active, input[type="button"]:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Botones secundarios */
+.button.is-light, .button.is-outlined {
+  background: var(--button-secondary);
+  color: var(--button-secondary-fg);
+  border-color: var(--border-light);
+}
+
+.button.is-light:hover, .button.is-outlined:hover {
+  background: var(--button-secondary-hover);
+  border-color: var(--border-medium);
+}
+
+/* Campos de entrada */
+input, textarea, select {
+  background: var(--dropdown-bg);
+  color: var(--dropdown-fg);
+  border: 1px solid var(--dropdown-border);
+  border-radius: 6px;
+  padding: 0.6em 1em;
+  font-size: 0.95em;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+input:hover, textarea:hover, select:hover {
+  border-color: var(--border-medium);
+  background: var(--dropdown-hover);
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.1);
+  background: var(--dropdown-bg);
+}
+
+body.dark-mode input:focus, 
+body.dark-mode textarea:focus, 
+body.dark-mode select:focus {
+  box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.2);
+}
+
+/* Dropdowns ya cubiertos en campos de entrada arriba */
+
+/* Navbar mejorado */
+.navbar, .navbar-menu {
+  background: var(--bg) !important;
+  color: var(--fg) !important;
+  border-bottom: 1px solid var(--border-light);
+  backdrop-filter: blur(8px);
+}
+
+/* Arreglar dropdowns del navbar con selectores más específicos */
+.navbar .navbar-dropdown,
+.navbar-item.has-dropdown .navbar-dropdown,
+body.dark-mode .navbar .navbar-dropdown,
+body.dark-mode .navbar-item.has-dropdown .navbar-dropdown {
+  background: var(--dropdown-bg) !important;
+  background-color: var(--dropdown-bg) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 16px var(--card-shadow) !important;
+  padding: 0.5rem 0 !important;
+}
+
+/* Estilos específicos para modo oscuro */
+body.dark-mode .navbar-dropdown {
+  background: var(--dropdown-bg) !important;
+  background-color: var(--dropdown-bg) !important;
+}
+
+body.dark-mode .navbar-item.has-dropdown:hover .navbar-dropdown,
+body.dark-mode .navbar-item.has-dropdown.is-active .navbar-dropdown {
+  background: var(--dropdown-bg) !important;
+  background-color: var(--dropdown-bg) !important;
+}
+
+.navbar .navbar-item, .navbar .navbar-link {
+  color: var(--fg) !important;
+  border-radius: 6px;
+  margin: 0 0.25rem;
+  transition: all 0.2s ease;
+}
+
+/* Items dentro del dropdown con selectores más específicos */
+.navbar-dropdown .navbar-item,
+.navbar .navbar-dropdown .navbar-item,
+body.dark-mode .navbar-dropdown .navbar-item,
+body.dark-mode .navbar .navbar-dropdown .navbar-item {
+  color: var(--dropdown-fg) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  padding: 0.75rem 1.5rem !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+.navbar-dropdown .navbar-item:hover,
+.navbar .navbar-dropdown .navbar-item:hover,
+body.dark-mode .navbar-dropdown .navbar-item:hover,
+body.dark-mode .navbar .navbar-dropdown .navbar-item:hover {
+  background: var(--dropdown-hover) !important;
+  background-color: var(--dropdown-hover) !important;
+  color: var(--primary) !important;
+}
+
+.navbar .navbar-item:hover, .navbar .navbar-link:hover {
+  background: var(--dropdown-hover) !important;
+  color: var(--primary) !important;
+}
+
+.navbar .button {
+  background: var(--button-bg) !important;
+  color: var(--button-fg) !important;
+  border: 1px solid var(--button-bg) !important;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.navbar .button:hover {
+  background: var(--button-hover) !important;
+  border-color: var(--button-hover) !important;
+  transform: translateY(-1px);
+}
+
+/* Mejor estilo para el theme toggle */
+#theme-toggle-btn {
+  background: var(--button-secondary) !important;
+  color: var(--button-secondary-fg) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: 50% !important;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+}
+
+#theme-toggle-btn:hover {
+  background: var(--button-secondary-hover) !important;
+  border-color: var(--border-medium) !important;
+  transform: translateY(-1px) rotate(15deg) !important;
+}
+
+/* Arreglar problema de posicionamiento del texto del botón */
+#theme-toggle-btn .icon {
+  margin: 0 !important;
+}
+
+#theme-toggle-btn span.icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Enlaces */
+a {
+  color: var(--link-color);
+  transition: color 0.2s ease;
+}
+a:hover {
+  color: var(--link-hover);
+}
+
+/* Tarjetas y elementos de contenido mejorados */
+.card, .box, .message, .notification {
+  background: var(--card-bg);
+  color: var(--fg);
+  box-shadow: 0 4px 6px -1px var(--card-shadow), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.card:hover, .box:hover {
+  box-shadow: 0 10px 15px -3px var(--card-shadow), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+/* Mejores estilos de notificación */
+.notification {
+  border-left: 4px solid var(--primary);
+  padding: 1.25rem 1.5rem;
+}
+
+.notification.is-success {
+  background: var(--success-light);
+  border-left-color: var(--success);
+  color: var(--success);
+}
+
+.notification.is-warning {
+  background: var(--warning-light);
+  border-left-color: var(--warning);
+  color: var(--warning);
+}
+
+.notification.is-danger {
+  background: var(--danger-light);
+  border-left-color: var(--danger);
+  color: var(--danger);
+}
+
+.notification.is-info {
+  background: var(--info-light);
+  border-left-color: var(--info);
+  color: var(--info);
+}
+
+/* Estados de color mejorados */
+.is-success { 
+  background: var(--success) !important; 
+  color: white !important;
+}
+.is-warning { 
+  background: var(--warning) !important; 
+  color: var(--fg) !important;
+}
+.is-danger { 
+  background: var(--danger) !important; 
+  color: white !important;
+}
+.is-info { 
+  background: var(--info) !important; 
+  color: white !important;
+}
+
+/* Mejores colores para estados de botones */
+.button.is-success {
+  background: var(--success) !important;
+  color: white !important;
+  border-color: var(--success) !important;
+}
+
+.button.is-warning {
+  background: var(--warning) !important;
+  color: var(--fg) !important;
+  border-color: var(--warning) !important;
+}
+
+.button.is-danger {
+  background: var(--danger) !important;
+  color: white !important;
+  border-color: var(--danger) !important;
+}
+
+.button.is-info {
+  background: var(--info) !important;
+  color: white !important;
+  border-color: var(--info) !important;
+}
+
+.button.is-link {
+  background: var(--primary) !important;
+  color: white !important;
+  border-color: var(--primary) !important;
+}
+
+/* Hover states para botones de color */
+.button.is-success:hover {
+  background: color-mix(in srgb, var(--success) 85%, black) !important;
+}
+
+.button.is-warning:hover {
+  background: color-mix(in srgb, var(--warning) 85%, black) !important;
+}
+
+.button.is-danger:hover {
+  background: color-mix(in srgb, var(--danger) 85%, black) !important;
+}
+
+.button.is-info:hover {
+  background: color-mix(in srgb, var(--info) 85%, black) !important;
+}
+
+.button.is-link:hover {
+  background: color-mix(in srgb, var(--primary) 85%, black) !important;
+}
+
+/* Mejorar contraste de texto en modo oscuro */
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4, body.dark-mode h5, body.dark-mode h6, 
+body.dark-mode label, body.dark-mode p, body.dark-mode span, body.dark-mode div, body.dark-mode li, 
+body.dark-mode th, body.dark-mode td, body.dark-mode .content {
+  color: var(--fg) !important;
+}
+
+body.dark-mode .navbar-dropdown, body.dark-mode .dropdown-content {
+  background: var(--dropdown-bg) !important;
+  color: var(--dropdown-fg) !important;
+  border: 1px solid var(--dropdown-border) !important;
+}
+
+body.dark-mode input, body.dark-mode textarea, body.dark-mode select {
+  background: var(--dropdown-bg) !important;
+  color: var(--dropdown-fg) !important;
+  border: 1px solid var(--dropdown-border) !important;
+}
+
+body.dark-mode input::placeholder, body.dark-mode textarea::placeholder {
+  color: #9ca3af !important;
+}
+
+/* Tablas mejoradas */
+table, .table {
+  background: var(--card-bg);
+  color: var(--fg);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px var(--card-shadow);
+}
+
+table th, .table th {
+  background: var(--bg-secondary);
+  color: var(--fg);
+  border-bottom: 2px solid var(--border-light);
+  font-weight: 600;
+  padding: 1rem 0.75rem;
+}
+
+table td, .table td {
+  border-bottom: 1px solid var(--border-light);
+  padding: 0.75rem;
+  transition: background-color 0.2s ease;
+}
+
+table tr:hover td, .table tr:hover td {
+  background: var(--dropdown-hover);
+}
+
+table tr:last-child td, .table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Transiciones suaves globales */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+/* Scroll suave */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mejores placeholders */
+input::placeholder, textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+
+/* Focus ring personalizado */
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Mejores códigos y texto monoespacio */
+code, pre, .code {
+  background: var(--bg-secondary);
+  color: var(--fg);
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', 'Courier New', monospace;
+}
+
+code {
+  padding: 0.2em 0.4em;
+  font-size: 0.9em;
+}
+
+pre {
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+/* Mejores tooltips y títulos */
+[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  background: var(--card-bg);
+  color: var(--fg);
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 2px 8px var(--card-shadow);
+  font-size: 0.875rem;
+  z-index: 1000;
+  white-space: nowrap;
+}
+
+/* Asegurar visibilidad de todos los elementos de texto */
+body.dark-mode {
+  /* Títulos y encabezados */
+  --title-color: var(--fg);
+  --subtitle-color: var(--fg-secondary);
+}
+
+/* Arreglar tabla que se ve con fondo blanco */
+body.dark-mode .table-container {
+  background: var(--bg) !important;
+}
+
+body.dark-mode .table-container .table {
+  background: var(--card-bg) !important;
+  color: var(--fg) !important;
+}
+
+/* Forzar fondo oscuro en todas las secciones */
+body.dark-mode section,
+body.dark-mode article,
+body.dark-mode div,
+body.dark-mode main {
+  background-color: inherit !important;
+}
+
+body.dark-mode .title, 
+body.dark-mode .subtitle,
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, 
+body.dark-mode h4, body.dark-mode h5, body.dark-mode h6 {
+  color: var(--fg) !important;
+}
+
+/* Mensajes y alertas */
+body.dark-mode .message {
+  background: var(--card-bg) !important;
+  color: var(--fg) !important;
+}
+
+body.dark-mode .message-header {
+  background: var(--primary) !important;
+  color: white !important;
+}
+
+body.dark-mode .message-body {
+  background: var(--card-bg) !important;
+  color: var(--fg) !important;
+  border-color: var(--border-light) !important;
+}
+
+/* Progress bars */
+body.dark-mode .progress {
+  background: var(--bg-secondary) !important;
+}
+
+body.dark-mode .progress::-webkit-progress-bar {
+  background: var(--bg-secondary) !important;
+}
+
+body.dark-mode .progress::-webkit-progress-value {
+  background: var(--primary) !important;
+}
+
+body.dark-mode .progress::-moz-progress-bar {
+  background: var(--primary) !important;
+}
+
+/* Drag and drop areas */
+body.dark-mode .file {
+  background: var(--card-bg) !important;
+  border-color: var(--border-light) !important;
+}
+
+body.dark-mode .file-cta {
+  background: var(--button-bg) !important;
+  color: var(--button-fg) !important;
+  border-color: var(--border-light) !important;
+}
+
+body.dark-mode .file-label {
+  color: var(--fg) !important;
+}
+
+/* Texto general */
+body.dark-mode p, 
+body.dark-mode span, 
+body.dark-mode div, 
+body.dark-mode li,
+body.dark-mode label,
+body.dark-mode .content,
+body.dark-mode .help {
+  color: var(--fg) !important;
+}
+
+/* Texto muted/secundario */
+body.dark-mode .has-text-grey,
+body.dark-mode .has-text-grey-light,
+body.dark-mode .help,
+body.dark-mode i {
+  color: var(--text-muted) !important;
+}
+
+/* Iconos */
+body.dark-mode .icon {
+  color: inherit !important;
+}
+
+/* SOLUCION ULTRA ESPECIFICA SIN INLINE - Usando ID para máxima especificidad */
+html body.dark-mode div#system-dropdown.navbar-dropdown,
+html body.dark-mode .navbar div#system-dropdown.navbar-dropdown,
+html body.dark-mode .navbar-item.has-dropdown div#system-dropdown.navbar-dropdown,
+html body.dark-mode .navbar .has-dropdown:hover div#system-dropdown.navbar-dropdown,
+html body.dark-mode .navbar .has-dropdown.is-active div#system-dropdown.navbar-dropdown,
+html body.dark-mode .navbar-item.has-dropdown:hover div#system-dropdown.navbar-dropdown,
+html body.dark-mode .navbar-item.has-dropdown.is-active div#system-dropdown.navbar-dropdown {
+  background: #2d3748 !important;
+  background-color: #2d3748 !important;
+  border: 1px solid #4a5568 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Selectores para cualquier dropdown en modo oscuro (fallback) */
+html body.dark-mode .navbar .has-dropdown:hover .navbar-dropdown,
+html body.dark-mode .navbar .has-dropdown.is-active .navbar-dropdown,
+html body.dark-mode .navbar-item.has-dropdown:hover .navbar-dropdown,
+html body.dark-mode .navbar-item.has-dropdown.is-active .navbar-dropdown,
+html body.dark-mode .navbar-dropdown.is-boxed,
+html body.dark-mode .navbar-dropdown.is-right,
+html body.dark-mode .navbar .navbar-dropdown,
+html body.dark-mode .navbar-dropdown {
+  background: #2d3748 !important;
+  background-color: #2d3748 !important;
+  border: 1px solid #4a5568 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Items específicos del dropdown system */
+html body.dark-mode div#system-dropdown.navbar-dropdown a.navbar-item,
+html body.dark-mode div#system-dropdown.navbar-dropdown .navbar-item {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #f7fafc !important;
+}
+
+html body.dark-mode div#system-dropdown.navbar-dropdown a.navbar-item:hover,
+html body.dark-mode div#system-dropdown.navbar-dropdown .navbar-item:hover {
+  background: #4a5568 !important;
+  background-color: #4a5568 !important;
+  color: #63b3ed !important;
+}
+
+/* Fallback para todos los items de dropdown */
+html body.dark-mode .navbar .navbar-dropdown a.navbar-item,
+html body.dark-mode .navbar .navbar-dropdown .navbar-item,
+html body.dark-mode .navbar-dropdown a.navbar-item,
+html body.dark-mode .navbar-dropdown .navbar-item {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #f7fafc !important;
+}
+
+html body.dark-mode .navbar .navbar-dropdown a.navbar-item:hover,
+html body.dark-mode .navbar .navbar-dropdown .navbar-item:hover,
+html body.dark-mode .navbar-dropdown a.navbar-item:hover,
+html body.dark-mode .navbar-dropdown .navbar-item:hover {
+  background: #4a5568 !important;
+  background-color: #4a5568 !important;
+  color: #63b3ed !important;
+}
+
+/* Selectores adicionales para asegurar cobertura */
+body.dark-mode div.navbar-dropdown,
+body.dark-mode .navbar div.navbar-dropdown,
+body.dark-mode .navbar-item.has-dropdown div.navbar-dropdown {
+  background: #2d3748 !important;
+  background-color: #2d3748 !important;
+}
+
+/* Clase especial para JavaScript */
+body.dark-mode .forced-dark-dropdown {
+  background: #2d3748 !important;
+  background-color: #2d3748 !important;
+  border: 1px solid #4a5568 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4) !important;
 }
 
 .navbar {

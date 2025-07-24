@@ -12,17 +12,27 @@
         width: max-content;
         max-width: 400px;
         padding: 0.5rem 0.75rem;
-        color: black;
-        background-color: #f5faff;
-        border: 1px solid #004e9c;
+        color: var(--fg);
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-light);
         border-radius: 6px;
         text-align: center;
-        z-index: 1;
+        z-index: 1000;
+        box-shadow: 0 4px 6px -1px var(--card-shadow);
+        font-size: 0.875rem;
+        white-space: nowrap;
       }
     }
 
     .tooltip:hover .tooltip-text {
       visibility: visible;
+      opacity: 1;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+
+    .tooltip .tooltip-text {
+      opacity: 0;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
     }
 
     #error {

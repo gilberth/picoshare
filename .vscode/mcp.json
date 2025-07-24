@@ -1,0 +1,10 @@
+{
+  "servers": {
+    "serena": {
+      "command": "python",
+      "args": ["/Volumes/HomeDEV/HomeDevelopment/serena/scripts/mcp_server.py", "--transport", "sse", "--port", "9121"],
+      "transport": "http",
+      "port": 9121
+    }
+  }
+}
