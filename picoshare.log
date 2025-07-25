@@ -1,0 +1,6 @@
+2025/07/24 22:04:52 /Volumes/HomeDEV/HomeDevelopment/picoshare/cmd/picoshare/main.go:29: starting picoshare server
+2025/07/24 22:04:52 /Volumes/HomeDEV/HomeDevelopment/picoshare/store/sqlite/sqlite.go:37: reading DB from data/store.db
+2025/07/24 22:04:52 /Volumes/HomeDEV/HomeDevelopment/picoshare/store/sqlite/migrations.go:33: migration counter: 15/15
+2025/07/24 22:04:52 /Volumes/HomeDEV/HomeDevelopment/picoshare/cmd/picoshare/main.go:68: listening on 4001
+2025/07/24 22:05:33 /Volumes/HomeDEV/HomeDevelopment/picoshare/cmd/picoshare/main.go:69: http server exit: http: Server closed
+2025/07/24 22:05:33 /Volumes/HomeDEV/HomeDevelopment/picoshare/cmd/picoshare/main.go:74: <nil>

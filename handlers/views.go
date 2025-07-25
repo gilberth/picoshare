@@ -14,6 +14,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/mileusna/useragent"
 	"github.com/mtlynch/picoshare/v2/build"
+	"github.com/mtlynch/picoshare/v2/handlers/auth"
 	"github.com/mtlynch/picoshare/v2/handlers/parse"
 	"github.com/mtlynch/picoshare/v2/picoshare"
 	"github.com/mtlynch/picoshare/v2/store"
@@ -36,6 +37,17 @@ func (s Server) indexGet() http.HandlerFunc {
 			s.uploadGet()(w, r)
 			return
 		}
+		
+		// For Authentik OAuth2, redirect to auth endpoint to start OAuth flow
+		if multiAuth, ok := s.authenticator.(*auth.MultiProviderAuthenticator); ok {
+			if loginURL := multiAuth.GetLoginURL(r.URL.String()); loginURL != "" && loginURL != "/login" && loginURL != "/auth" {
+				// This is OAuth2 mode, redirect to our auth endpoint which will handle state properly
+				http.Redirect(w, r, "/api/auth", http.StatusTemporaryRedirect)
+				return
+			}
+		}
+		
+		// Show login page for shared secret or other auth methods
 		if err := t.Execute(w, struct {
 			commonProps
 		}{
@@ -439,7 +451,7 @@ func (s Server) fileConfirmDeleteGet() http.HandlerFunc {
 	}
 }
 
-func (s Server) authGet() http.HandlerFunc {
+func (s Server) loginPageGet() http.HandlerFunc {
 	t := parseTemplates("templates/pages/auth.html")
 
 	return func(w http.ResponseWriter, r *http.Request) {

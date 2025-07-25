@@ -747,3 +747,93 @@ body.dark-mode .forced-dark-dropdown {
     padding: 3rem 0rem;
   }
 }
+
+/* SOLUCIÓN DEFINITIVA DROPDOWN OSCURO - Máxima especificidad */
+html body.dark-mode .navbar .navbar-item.has-dropdown .navbar-dropdown,
+html body.dark-mode .navbar-end .navbar-item.has-dropdown .navbar-dropdown,
+html body.dark-mode .navbar-start .navbar-item.has-dropdown .navbar-dropdown,
+html body.dark-mode .navbar-item.has-dropdown.is-hoverable .navbar-dropdown,
+html body.dark-mode .navbar-item.has-dropdown.is-active .navbar-dropdown,
+body.dark-mode .navbar-dropdown,
+body.dark-mode .has-dropdown .navbar-dropdown {
+  background: #2d3748 !important;
+  background-color: #2d3748 !important;
+  border: 1px solid #4a5568 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4) !important;
+  color: #f7fafc !important;
+}
+
+/* Items del dropdown con máxima especificidad */
+html body.dark-mode .navbar .navbar-item.has-dropdown .navbar-dropdown .navbar-item,
+html body.dark-mode .navbar-end .navbar-item.has-dropdown .navbar-dropdown .navbar-item,
+html body.dark-mode .navbar-start .navbar-item.has-dropdown .navbar-dropdown .navbar-item,
+body.dark-mode .navbar-dropdown .navbar-item,
+body.dark-mode .has-dropdown .navbar-dropdown .navbar-item {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #f7fafc !important;
+}
+
+/* Hover de items del dropdown */
+html body.dark-mode .navbar .navbar-item.has-dropdown .navbar-dropdown .navbar-item:hover,
+html body.dark-mode .navbar-end .navbar-item.has-dropdown .navbar-dropdown .navbar-item:hover,
+html body.dark-mode .navbar-start .navbar-item.has-dropdown .navbar-dropdown .navbar-item:hover,
+body.dark-mode .navbar-dropdown .navbar-item:hover,
+body.dark-mode .has-dropdown .navbar-dropdown .navbar-item:hover {
+  background: #4a5568 !important;
+  background-color: #4a5568 !important;
+  color: #63b3ed !important;
+}
+
+/* SOLUCIÓN ULTRA AGRESIVA - Cubrir TODOS los estados dinámicos posibles */
+body.dark-mode .navbar-dropdown,
+body.dark-mode .navbar-dropdown:hover,
+body.dark-mode .navbar-dropdown:focus,
+body.dark-mode .navbar-dropdown:active,
+body.dark-mode .navbar-dropdown.is-active,
+body.dark-mode .navbar-dropdown.is-hoverable,
+body.dark-mode .has-dropdown:hover .navbar-dropdown,
+body.dark-mode .has-dropdown:focus .navbar-dropdown,
+body.dark-mode .has-dropdown:active .navbar-dropdown,
+body.dark-mode .has-dropdown.is-active .navbar-dropdown,
+body.dark-mode .has-dropdown.is-hoverable .navbar-dropdown,
+body.dark-mode .navbar-item.has-dropdown:hover .navbar-dropdown,
+body.dark-mode .navbar-item.has-dropdown:focus .navbar-dropdown,
+body.dark-mode .navbar-item.has-dropdown:active .navbar-dropdown,
+body.dark-mode .navbar-item.has-dropdown.is-active .navbar-dropdown,
+body.dark-mode .navbar-item.has-dropdown.is-hoverable .navbar-dropdown,
+body.dark-mode .navbar .navbar-dropdown,
+body.dark-mode .navbar:hover .navbar-dropdown,
+body.dark-mode .navbar-end .navbar-dropdown,
+body.dark-mode .navbar-start .navbar-dropdown {
+  background: #2d3748 !important;
+  background-color: #2d3748 !important;
+  border: 1px solid #4a5568 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4) !important;
+  color: #f7fafc !important;
+}
+
+/* Cubrir también después de eventos de mouse */
+body.dark-mode .navbar-dropdown::after,
+body.dark-mode .navbar-dropdown::before {
+  background: #2d3748 !important;
+  background-color: #2d3748 !important;
+}
+
+/* Items con todos los estados posibles */
+body.dark-mode .navbar-dropdown .navbar-item,
+body.dark-mode .navbar-dropdown .navbar-item:link,
+body.dark-mode .navbar-dropdown .navbar-item:visited,
+body.dark-mode .navbar-dropdown .navbar-item:focus,
+body.dark-mode .navbar-dropdown .navbar-item:active,
+body.dark-mode .navbar-dropdown a.navbar-item,
+body.dark-mode .navbar-dropdown a.navbar-item:link,
+body.dark-mode .navbar-dropdown a.navbar-item:visited,
+body.dark-mode .navbar-dropdown a.navbar-item:focus,
+body.dark-mode .navbar-dropdown a.navbar-item:active {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #f7fafc !important;
+}

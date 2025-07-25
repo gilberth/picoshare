@@ -4,7 +4,9 @@ import "net/http"
 
 func (s *Server) routes() {
 	s.router.HandleFunc("/api/auth", s.authPost()).Methods(http.MethodPost)
+	s.router.HandleFunc("/api/auth", s.authGet()).Methods(http.MethodGet)
 	s.router.HandleFunc("/api/auth", s.authDelete()).Methods(http.MethodDelete)
+	s.router.HandleFunc("/auth/callback", s.authCallback()).Methods(http.MethodGet)
 	s.router.Use(s.checkAuthentication)
 
 	authenticatedApis := s.router.PathPrefix("/api").Subrouter()
@@ -58,7 +60,7 @@ func (s *Server) routes() {
 	views := s.router.PathPrefix("/").Subrouter()
 	views.Use(upgradeToHttps)
 	views.Use(enforceContentSecurityPolicy)
-	views.HandleFunc("/login", s.authGet()).Methods(http.MethodGet)
+	views.HandleFunc("/login", s.loginPageGet()).Methods(http.MethodGet)
 	views.PathPrefix("/-{id}").HandlerFunc(s.entryGet()).Methods(http.MethodGet)
 	views.PathPrefix("/-{id}/{filename}").HandlerFunc(s.entryGet()).Methods(http.MethodGet)
 	// Legacy routes for entries. We stopped using them because the ! has
