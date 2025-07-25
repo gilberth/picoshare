@@ -1,59 +1,126 @@
 {{ define "navbar" }}
-  <nav class="navbar" role="navigation">
+  <nav class="navbar" role="navigation" aria-label="Navegación principal">
     <div class="container">
       <div class="navbar-brand">
-        <a class="navbar-item" href="/">PicoShare</a>
-        <a
+        <a class="navbar-item" href="/" aria-label="PicoShare - Ir al inicio">
+          <strong>PicoShare</strong>
+        </a>
+        
+        <!-- Botón de tema integrado en el brand para mejor UX móvil -->
+        <button 
+          id="theme-toggle-btn" 
+          class="button" 
+          title="Alternar modo oscuro/claro"
+          aria-label="Alternar modo oscuro/claro"
+          type="button"
+        >
+          <span class="icon" aria-hidden="true">
+            <i class="fas fa-moon"></i>
+          </span>
+        </button>
+        
+        <button
           role="button"
           class="navbar-burger"
-          aria-label="menu"
+          aria-label="Abrir menú de navegación"
           aria-expanded="false"
+          aria-controls="navbar-links"
           data-target="navbar-links"
         >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
-        </a>
-      <button id="theme-toggle-btn" class="button" style="margin-left:1em;" title="Alternar modo oscuro/claro">
-        <span class="icon">
-          <i class="fas fa-moon"></i>
-        </span>
-      </button>
+        </button>
       </div>
+      
       <div id="navbar-links" class="navbar-menu">
         {{ if .IsAuthenticated }}
           <div class="navbar-start">
             <div class="navbar-item">
-              <a class="button is-primary is-success" role="menuitem" href="/"
-                >Upload</a
+              <a 
+                class="button is-primary is-success" 
+                href="/"
+                aria-label="Subir archivos"
               >
+                Upload
+              </a>
             </div>
-            <a class="navbar-item" role="menuitem" href="/files">Files</a>
-            <a class="navbar-item" role="menuitem" href="/guest-links"
-              >Guest Links</a
+            <a 
+              class="navbar-item" 
+              href="/files"
             >
+              Files
+            </a>
+            <a 
+              class="navbar-item" 
+              href="/guest-links"
+            >
+              Guest Links
+            </a>
           </div>
         {{ end }}
+        
         <div class="navbar-end">
           {{ if .IsAuthenticated }}
             <div class="navbar-item has-dropdown is-hoverable">
-              <a class="navbar-link" role="menuitem">System</a>
-              <div class="navbar-dropdown" id="system-dropdown">
-                <a class="navbar-item" role="menuitem" href="/information"
-                  >Information</a
+              <button 
+                class="navbar-link" 
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-controls="system-dropdown"
+              >
+                System
+                <span class="icon is-small" aria-hidden="true">
+                  <i class="fas fa-angle-down"></i>
+                </span>
+              </button>
+              <div 
+                class="navbar-dropdown" 
+                id="system-dropdown"
+                role="menu"
+                aria-label="Menú del sistema"
+              >
+                <a 
+                  class="navbar-item" 
+                  role="menuitem" 
+                  href="/information"
                 >
-                <a class="navbar-item" role="menuitem" href="/settings"
-                  >Settings</a
+                  <span class="icon is-small" aria-hidden="true">
+                    <i class="fas fa-info-circle"></i>
+                  </span>
+                  Information
+                </a>
+                <a 
+                  class="navbar-item" 
+                  role="menuitem" 
+                  href="/settings"
                 >
-                <a id="navbar-log-out" class="navbar-item" role="menuitem"
-                  >Log Out</a
+                  <span class="icon is-small" aria-hidden="true">
+                    <i class="fas fa-cog"></i>
+                  </span>
+                  Settings
+                </a>
+                <hr class="navbar-divider" role="separator">
+                <button 
+                  id="navbar-log-out" 
+                  class="navbar-item" 
+                  role="menuitem"
+                  type="button"
                 >
+                  <span class="icon is-small" aria-hidden="true">
+                    <i class="fas fa-sign-out-alt"></i>
+                  </span>
+                  Log Out
+                </button>
               </div>
             </div>
           {{ else }}
             <div class="navbar-item">
-              <a class="button is-primary" role="menuitem" href="/login">
-                Log In
+              <a class="button is-primary" href="/login" aria-label="Iniciar sesión">
+                <span class="icon" aria-hidden="true">
+                  <i class="fas fa-sign-in-alt"></i>
+                </span>
+                <span>Log In</span>
               </a>
             </div>
           {{ end }}
