@@ -37,10 +37,41 @@ PS_SHARED_SECRET=somesecretpass PORT=4001 \
 
 To run PicoShare within a Docker container, mount a volume from your local system to store the PicoShare sqlite database.
 
+#### With Shared Secret Authentication (default)
+
 ```bash
 docker run \
   --env "PORT=4001" \
   --env "PS_SHARED_SECRET=somesecretpass" \
+  --publish 4001:4001/tcp \
+  --volume "${PWD}/data:/data" \
+  --name picoshare \
+  mtlynch/picoshare
+```
+
+#### With Authentik Authentication
+
+```bash
+docker run \
+  --env "PORT=4001" \
+  --env "PS_AUTH_PROVIDER=authentik" \
+  --env "PS_AUTHENTIK_URL=https://auth.example.com" \
+  --env "PS_AUTHENTIK_CLIENT_ID=your-client-id" \
+  --env "PS_AUTHENTIK_CLIENT_SECRET=your-client-secret" \
+  --env "PS_AUTHENTIK_REDIRECT_URI=http://yourserver:4001/auth/callback" \
+  --publish 4001:4001/tcp \
+  --volume "${PWD}/data:/data" \
+  --name picoshare \
+  mtlynch/picoshare
+```
+
+#### Using environment file
+
+You can also use an environment file (`.env`) to configure PicoShare:
+
+```bash
+docker run \
+  --env-file .env \
   --publish 4001:4001/tcp \
   --volume "${PWD}/data:/data" \
   --name picoshare \
@@ -89,7 +120,15 @@ services:
     image: mtlynch/picoshare
     environment:
       - PORT=4001
+      # For shared secret authentication (default)
       - PS_SHARED_SECRET=dummypass # Change to any password
+      
+      # For Authentik authentication (uncomment and configure)
+      # - PS_AUTH_PROVIDER=authentik
+      # - PS_AUTHENTIK_URL=https://auth.example.com
+      # - PS_AUTHENTIK_CLIENT_ID=your-client-id
+      # - PS_AUTHENTIK_CLIENT_SECRET=your-client-secret
+      # - PS_AUTHENTIK_REDIRECT_URI=http://yourserver:4001/auth/callback
     ports:
       - 4001:4001
     command: -db /data/store.db
@@ -111,7 +150,21 @@ services:
 | -------------------- | ------------------------------------------------------------------------------------ |
 | `PORT`               | TCP port on which to listen for HTTP connections (defaults to 4001).                 |
 | `PS_BEHIND_PROXY`    | Set to `"true"` for better logging when PicoShare is running behind a reverse proxy. |
-| `PS_SHARED_SECRET`   | (required) Specifies a passphrase for the admin user to log in to PicoShare.         |
+| `PS_AUTH_PROVIDER`   | Authentication provider: `shared_secret` or `authentik` (defaults to shared_secret). |
+| `PS_SHARED_SECRET`   | (required for shared_secret auth) Specifies a passphrase for the admin user.         |
+
+### Authentik Authentication Variables
+
+When using `PS_AUTH_PROVIDER=authentik`, configure these variables:
+
+| Environment Variable | Meaning                                                                              |
+| -------------------- | ------------------------------------------------------------------------------------ |
+| `PS_AUTHENTIK_URL`   | Base URL of your Authentik instance (e.g., `https://auth.example.com`).              |
+| `PS_AUTHENTIK_CLIENT_ID` | OAuth2 Client ID from your Authentik application.                                |
+| `PS_AUTHENTIK_CLIENT_SECRET` | OAuth2 Client Secret from your Authentik application.                        |
+| `PS_AUTHENTIK_REDIRECT_URI` | OAuth2 redirect URI (e.g., `http://yourserver:4001/auth/callback`).           |
+| `PS_AUTHENTIK_REVERSE_PROXY` | Set to `"true"` to use reverse proxy authentication instead of OAuth2.        |
+| `PS_AUTHENTIK_TRUSTED_PROXIES` | Comma-separated list of trusted proxy IPs for reverse proxy mode.           |
 
 ### Docker environment variables
 
@@ -138,6 +191,34 @@ If you rebuild the Docker image from source, you can adjust the build behavior w
 PicoShare is maintained by Michael Lynch as a hobby project.
 
 Due to time limitations, I keep PicoShare's scope limited to only the features that fit into my workflows. That unfortunately means that I sometimes reject proposals or contributions for perfectly good features. It's nothing against those features, but I only have bandwidth to maintain features that I use.
+
+## Docker Build Optimizations
+
+This fork includes optimizations to improve Docker build performance:
+
+### Build Context Optimization
+
+The `.dockerignore` file has been enhanced to exclude unnecessary files from the Docker build context:
+
+- Development artifacts (`node_modules/`, `.git/`, `.serena/`, `.claude/`)
+- Binary files (`picoshare-binary`, `*.log`)
+- Documentation and test files (`e2e/`, `docs/`)
+
+This reduces the build context from ~98MB to ~22MB, significantly improving build times.
+
+### Build Performance
+
+- Build context size: ~22MB (optimized from ~98MB)
+- Typical build time: 2-5 minutes (depending on network and system resources)
+- Docker cache is utilized effectively for faster rebuilds
+
+### Troubleshooting Build Issues
+
+If Docker builds timeout or fail:
+
+1. Clean Docker system: `docker system prune -f`
+2. Retry the build command (builds may require multiple attempts)
+3. Ensure adequate disk space and memory for Docker operations
 
 ## Deployment
 

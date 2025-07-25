@@ -30,6 +30,25 @@ body.dark-mode {
   min-height: 100vh;
 }
 
+/* Mejorar contraste de texto en modo oscuro */
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode div,
+body.dark-mode label,
+body.dark-mode td,
+body.dark-mode th {
+  color: var(--fg) !important;
+}
+
+/* Asegurar que los enlaces sean visibles en modo oscuro */
+body.dark-mode a:not(.button) {
+  color: var(--primary) !important;
+}
+
+body.dark-mode a:not(.button):hover {
+  color: var(--primary-hover) !important;
+}
+
 body.dark-mode * {
   border-color: var(--border-light, #4a5568);
 }
@@ -132,6 +151,21 @@ form {
   --text-muted: #6b7280;  /* Contraste mejorado 4.7:1 */
   --text-subtle: #9ca3af;
   
+  /* Colores para tipos de archivo */
+  --file-image: #059669;     /* Verde para imágenes */
+  --file-pdf: #dc2626;       /* Rojo para PDF */
+  --file-doc: #2563eb;       /* Azul para documentos Word */
+  --file-excel: #059669;     /* Verde para Excel */
+  --file-powerpoint: #d97706; /* Naranja para PowerPoint */
+  --file-zip: #7c3aed;       /* Morado para archivos comprimidos */
+  --file-video: #db2777;     /* Rosa para videos */
+  --file-audio: #0891b2;     /* Cian para audio */
+  --file-code: #ea580c;      /* Naranja para código */
+  --file-text: #6b7280;      /* Gris para texto */
+  --file-executable: #991b1b; /* Rojo oscuro para ejecutables */
+  --file-disk: #374151;      /* Gris oscuro para discos */
+  --file-generic: var(--text-muted); /* Color por defecto */
+  
   /* Transiciones optimizadas */
   --transition-fast: 0.15s ease-out;
   --transition-base: 0.2s ease-out;
@@ -215,9 +249,24 @@ body.dark-mode {
   --info-light: var(--primary-light);
   --info-hover: var(--primary-hover);
   
-  /* Texto auxiliar */
-  --text-muted: #9ca3af;
-  --text-subtle: #6b7280;
+  /* Texto auxiliar con mejor contraste en modo oscuro */
+  --text-muted: #d1d5db;  /* Más claro para mejor legibilidad */
+  --text-subtle: #9ca3af;
+  
+  /* Colores para tipos de archivo en modo oscuro */
+  --file-image: #34d399;     /* Verde más brillante para imágenes */
+  --file-pdf: #f87171;       /* Rojo más suave para PDF */
+  --file-doc: #60a5fa;       /* Azul más brillante para documentos Word */
+  --file-excel: #34d399;     /* Verde brillante para Excel */
+  --file-powerpoint: #fbbf24; /* Amarillo brillante para PowerPoint */
+  --file-zip: #a78bfa;       /* Morado más suave para archivos comprimidos */
+  --file-video: #f472b6;     /* Rosa más brillante para videos */
+  --file-audio: #22d3ee;     /* Cian más brillante para audio */
+  --file-code: #fb923c;      /* Naranja más brillante para código */
+  --file-text: #9ca3af;      /* Gris para texto */
+  --file-executable: #fca5a5; /* Rojo más suave para ejecutables */
+  --file-disk: #6b7280;      /* Gris medio para discos */
+  --file-generic: var(--text-muted); /* Color por defecto */
 }
 
 /* Botones - Mejorados para accesibilidad y UX */
@@ -430,16 +479,21 @@ body.dark-mode select {
   border-radius: var(--radius-sm);
 }
 
-/* Dropdowns del navbar - Diseño unificado */
+/* Dropdowns del navbar - Diseño unificado con alineación mejorada */
 .navbar .navbar-dropdown {
   background: var(--dropdown-bg) !important;
   border: 1px solid var(--dropdown-border) !important;
   border-radius: var(--radius-lg) !important;
   box-shadow: var(--card-shadow-hover) !important;
   padding: var(--space-sm) 0 !important;
-  margin-top: var(--space-xs) !important;
+  margin-top: 0 !important;
   min-width: 200px;
   animation: dropdown-appear 0.2s ease-out;
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  right: auto !important;
+  z-index: 40 !important;
 }
 
 @keyframes dropdown-appear {
@@ -472,6 +526,11 @@ body.dark-mode .navbar .navbar-dropdown {
   display: inline-flex;
   align-items: center;
   gap: var(--space-xs);
+}
+
+/* Mejorar posicionamiento de elementos con dropdown */
+.navbar .has-dropdown {
+  position: relative !important;
 }
 
 .navbar .navbar-item:hover, .navbar .navbar-link:hover {
@@ -592,11 +651,14 @@ body.dark-mode .navbar .navbar-dropdown {
   transform: translateY(-5px) rotate(-45deg);
 }
 
-/* Items dentro del dropdown - Simplificados */
+/* Items dentro del dropdown - Simplificados con mejor contraste */
 .navbar-dropdown .navbar-item {
   color: var(--dropdown-fg) !important;
   background: transparent !important;
   transition: all var(--transition-base) !important;
+  white-space: nowrap !important;
+  display: block !important;
+  width: 100% !important;
 }
 
 .navbar-dropdown .navbar-item:hover {
@@ -928,4 +990,221 @@ pre {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* Sistema de miniaturas para archivos */
+:root {
+  --thumbnail-xs: 32px;    /* Lista compacta, móvil */
+  --thumbnail-sm: 48px;    /* Lista estándar */
+  --thumbnail-md: 64px;    /* Vista de tarjetas */
+  --thumbnail-lg: 96px;    /* Vista previa ampliada */
+  --thumbnail-xl: 128px;   /* Modal de detalles */
+}
+
+/* Contenedor de miniatura optimizado */
+.file-thumbnail-container {
+  position: relative;
+  width: var(--thumbnail-sm);
+  height: var(--thumbnail-sm);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  transition: all var(--transition-base);
+  flex-shrink: 0;
+}
+
+.file-thumbnail {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Imagen de vista previa */
+.file-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity var(--transition-base);
+}
+
+/* Fallback para iconos */
+.file-thumbnail.fallback img {
+  display: none;
+}
+
+.file-icon-fallback {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.file-thumbnail.fallback .file-icon-fallback,
+.file-thumbnail:not([data-has-preview]) .file-icon-fallback {
+  opacity: 1;
+}
+
+/* Iconos por tipo de archivo */
+.file-icon-fallback i {
+  font-size: 1.25rem;
+  color: var(--file-generic);
+  margin-bottom: 2px;
+}
+
+.file-extension {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--bg);
+  padding: 1px 4px;
+  border-radius: 2px;
+  border: 1px solid var(--border-light);
+}
+
+/* Colores específicos por tipo de archivo */
+.file-thumbnail[data-file-type*="pdf"] .file-icon-fallback i {
+  color: var(--file-pdf);
+}
+
+.file-thumbnail[data-file-type*="msword"] .file-icon-fallback i,
+.file-thumbnail[data-file-type*="officedocument.wordprocessingml"] .file-icon-fallback i {
+  color: var(--file-doc);
+}
+
+.file-thumbnail[data-file-type*="ms-excel"] .file-icon-fallback i,
+.file-thumbnail[data-file-type*="officedocument.spreadsheetml"] .file-icon-fallback i {
+  color: var(--file-excel);
+}
+
+.file-thumbnail[data-file-type*="ms-powerpoint"] .file-icon-fallback i,
+.file-thumbnail[data-file-type*="officedocument.presentationml"] .file-icon-fallback i {
+  color: var(--file-powerpoint);
+}
+
+.file-thumbnail[data-file-type*="zip"] .file-icon-fallback i,
+.file-thumbnail[data-file-type*="x-zip"] .file-icon-fallback i {
+  color: var(--file-zip);
+}
+
+.file-thumbnail[data-file-type*="video/"] .file-icon-fallback i {
+  color: var(--file-video);
+}
+
+.file-thumbnail[data-file-type*="audio/"] .file-icon-fallback i {
+  color: var(--file-audio);
+}
+
+.file-thumbnail[data-file-type*="image/"] .file-icon-fallback i {
+  color: var(--file-image);
+}
+
+.file-thumbnail[data-file-type*="text/"] .file-icon-fallback i {
+  color: var(--file-text);
+}
+
+/* Estados interactivos */
+.file-entry {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+}
+
+.file-entry:hover {
+  background: var(--dropdown-hover);
+}
+
+.file-entry:hover .file-thumbnail-container {
+  transform: translateY(-1px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* Información del archivo */
+.file-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0; /* Para truncamiento */
+}
+
+.file-name {
+  font-weight: 500;
+  color: var(--fg);
+  text-decoration: none;
+  transition: color var(--transition-base);
+  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-name:hover {
+  color: var(--primary);
+}
+
+.file-size {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Mejorar visibilidad del tamaño de archivo en modo oscuro */
+body.dark-mode .file-size {
+  color: var(--text-muted) !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .file-thumbnail-container {
+    width: var(--thumbnail-xs);
+    height: var(--thumbnail-xs);
+  }
+  
+  .file-entry {
+    gap: var(--space-sm);
+  }
+  
+  .file-icon-fallback i {
+    font-size: 1rem;
+  }
+  
+  .file-extension {
+    font-size: 0.5rem;
+  }
+}
+
+/* Loading states */
+.file-thumbnail img[loading="lazy"] {
+  background: var(--bg-secondary);
+}
+
+.file-thumbnail.loading::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 2px solid var(--border-light);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }

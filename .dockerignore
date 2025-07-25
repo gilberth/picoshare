@@ -9,3 +9,14 @@ dist/
 fly.toml
 modd.conf
 Dockerfile
+node_modules/
+picoshare-binary
+*.log
+.git/
+.serena/
+.claude/
+e2e/
+docs/
+build.log
+picoshare.log
+picoshare-test.log

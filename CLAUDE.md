@@ -79,6 +79,10 @@
    - **Scopes**: `openid profile email`
    - **Client Type**: Confidential
 
+#### Usuario de prueba para validación Authentik:
+- **Usuario**: claude-debug
+- **Contraseña**: Inicio$1
+
 ### Notas importantes:
 
 - Siempre probar cambios en Docker antes de confirmar

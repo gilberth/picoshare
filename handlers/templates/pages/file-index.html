@@ -46,6 +46,7 @@
     import { showElement, hideElement } from "/js/lib/bulma.js";
     import { copyToClipboard } from "/js/lib/clipboard.js";
     import { makeShortLink } from "/js/lib/links.js";
+    import "/js/thumbnail-loader.js";
 
     const errorContainer = document.getElementById("error");
 
@@ -80,9 +81,8 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Filename</th>
+          <th>File</th>
           <th>Note</th>
-          <th>Size</th>
           <th>Uploaded</th>
           <th>Expires</th>
           <th></th>
@@ -90,9 +90,29 @@
       </thead>
       <tbody>
         {{ range .Files }}
+          {{ $fileIcon := getFileIcon .Filename .ContentType }}
           <tr test-data-filename="{{ .Filename }}">
-            <td class="is-vcentered">
-              <a href="/-{{ .ID }}">{{ .Filename }}</a>
+            <td class="is-vcentered file-cell">
+              <div class="file-entry">
+                <div class="file-thumbnail-container">
+                  <div class="file-thumbnail" data-file-type="{{ .ContentType }}">
+                    {{ if isImageFile .ContentType }}
+                      <img src="/api/thumbnail/{{ .ID }}" 
+                           alt="Vista previa de {{ .Filename }}"
+                           loading="lazy"
+                           onerror="this.parentElement.classList.add('fallback')">
+                    {{ end }}
+                    <div class="file-icon-fallback">
+                      <i class="{{ $fileIcon.Icon }}" style="color: {{ $fileIcon.Color }}"></i>
+                      <span class="file-extension">{{ $fileIcon.Extension }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="file-info">
+                  <a href="/-{{ .ID }}" class="file-name">{{ .Filename }}</a>
+                  <span class="file-size">{{ formatFileSize .Size }}</span>
+                </div>
+              </div>
             </td>
             <td class="is-vcentered">
               {{ if .Note.Value }}
@@ -102,7 +122,6 @@
                 </div>
               {{ end }}
             </td>
-            <td class="is-vcentered">{{ formatFileSize .Size }}</td>
             <td class="is-vcentered">{{ formatDate .Uploaded }}</td>
             <td class="is-vcentered">
               {{- formatExpiration .Expires -}}

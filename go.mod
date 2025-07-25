@@ -12,4 +12,8 @@ require (
 	golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1
 )
 
-require github.com/felixge/httpsnoop v1.0.1 // indirect
+require (
+	github.com/felixge/httpsnoop v1.0.1 // indirect
+	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646 // indirect
+	golang.org/x/image v0.29.0 // indirect
+)

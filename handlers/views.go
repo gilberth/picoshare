@@ -8,7 +8,9 @@ import (
 	"log"
 	"math"
 	"net/http"
+	"path/filepath"
 	"sort"
+	"strings"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -191,6 +193,19 @@ func (s Server) fileIndexGet() http.HandlerFunc {
 			return fmt.Sprintf("%s (%.0f days)", t.Format(time.DateOnly), daysRemaining)
 		},
 		"formatFileSize": humanReadableFileSize,
+		"getFileIcon": func(filename picoshare.Filename, contentType picoshare.ContentType) FileIcon {
+			return GetFileIcon(filename, contentType)
+		},
+		"isImageFile": func(contentType picoshare.ContentType) bool {
+			return IsImageFile(contentType)
+		},
+		"getExtension": func(filename picoshare.Filename) string {
+			ext := filepath.Ext(filename.String())
+			if ext != "" && ext[0] == '.' {
+				ext = ext[1:] // Remove the dot
+			}
+			return strings.ToUpper(ext)
+		},
 	}
 
 	t := parseTemplatesWithFuncs(fns, "templates/pages/file-index.html")

@@ -19,6 +19,7 @@ func (s *Server) routes() {
 	authenticatedApis.HandleFunc("/guest-links/{id}/enable", s.guestLinksEnableDisable()).Methods(http.MethodPut)
 	authenticatedApis.HandleFunc("/guest-links/{id}/disable", s.guestLinksEnableDisable()).Methods(http.MethodPut)
 	authenticatedApis.HandleFunc("/settings", s.settingsPut()).Methods(http.MethodPut)
+	authenticatedApis.HandleFunc("/thumbnail/{id}", s.thumbnailGet()).Methods(http.MethodGet)
 
 	publicApis := s.router.PathPrefix("/api").Subrouter()
 	publicApis.HandleFunc("/guest/{guestLinkID}", s.guestEntryPost()).Methods(http.MethodPost)
